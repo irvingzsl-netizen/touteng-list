@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>装修家电家具采购清单</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入手写风格字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 密码验证界面 -->
+    <div id="passwordOverlay" class="password-overlay">
+        <div class="password-box">
+            <div class="password-icon">🔒</div>
+            <h2>请输入访问密码</h2>
+            <input type="password" id="passwordInput" placeholder="请输入密码" autocomplete="off">
+            <button id="passwordSubmit">确认</button>
+            <div id="passwordError" class="password-error"></div>
+        </div>
+    </div>
+    
+    <!-- 装饰性光效 -->
+    <div class="light-effect light-1"></div>
+    <div class="light-effect light-2"></div>
+    <div class="light-effect light-3"></div>
+    
+    <div class="container" id="mainContent">
+        <header>
+            <!-- 极光效果 -->
+            <div class="aurora"></div>
+            <!-- 脉冲光环 -->
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring" style="animation-delay: 2s;"></div>
+            <!-- 漂浮粒子 -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <h1>头疼清单</h1>
+        </header>
+
+        <!-- 标签页导航 -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')">
+                <span class="tab-icon">📊</span>
+                <span class="tab-text">数据看板</span>
+            </button>
+            <button class="tab-btn" data-tab="table" onclick="switchTab('table')">
+                <span class="tab-icon">📋</span>
+                <span class="tab-text">采购清单</span>
+            </button>
+        </nav>
+
+        <!-- 标签页容器 -->
+        <div class="tab-container">
+            <!-- 数据看板页面 -->
+            <div class="tab-content active" id="dashboard-tab">
+            <!-- 核心指标面板 -->
+            <section class="dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <h3>总项目数</h3>
+                            <p class="stat-number" id="totalProjects">107</p>
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <h3>已完成</h3>
+                            <p class="stat-number" id="completedProjects">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-icon">🛒</div>
+                        <div class="stat-content">
+                            <h3>纠结中</h3>
+                            <p class="stat-number" id="inProgressProjects">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-content">
+                            <h3>预算合计</h3>
+                            <p class="stat-number" id="totalBudget">¥0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="priority-stats">
+                    <div class="priority-item must-buy">
+                        <span class="priority-label">必买项目</span>
+                        <span class="priority-count" id="mustBuyCount">36</span>
+                        <span class="priority-completed">已完成: <span id="mustBuyCompleted">0</span></span>
+                    </div>
+                    <div class="priority-item important">
+                        <span class="priority-label">重要项目</span>
+                        <span class="priority-count" id="importantCount">43</span>
+                        <span class="priority-completed">已完成: <span id="importantCompleted">0</span></span>
+                    </div>
+                    <div class="priority-item optional">
+                        <span class="priority-label">按需项目</span>
+                        <span class="priority-count" id="optionalCount">22</span>
+                    </div>
+                    <div class="priority-item later">
+                        <span class="priority-label">可延后项目</span>
+                        <span class="priority-count" id="laterCount">6</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 按空间预算汇总 -->
+            <section class="space-summary">
+                <h2>📍 按空间预算汇总</h2>
+                <div class="space-grid" id="spaceGrid">
+                    <!-- 动态生成 -->
+                </div>
+            </section>
+        </div>
+
+        <!-- 采购清单页面 -->
+        <div class="tab-content" id="table-tab">
+            <!-- 筛选和搜索 -->
+            <section class="filters">
+                <div class="filter-group">
+                    <label>空间筛选：</label>
+                    <select id="spaceFilter">
+                        <option value="all">全部空间</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>大类筛选：</label>
+                    <select id="categoryFilter">
+                        <option value="all">全部大类</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>状态：</label>
+                    <select id="statusFilter">
+                        <option value="all">全部状态</option>
+                    </select>
+                </div>
+                <div class="filter-group search-group">
+                    <input type="text" id="searchInput" placeholder="搜索项目名称...">
+                </div>
+            </section>
+
+            <!-- 采购清单表格 -->
+            <section class="table-section">
+                <div class="table-header">
+                    <h2>📋 全屋采购清单</h2>
+                    <button class="btn-add" onclick="addNewItem()">+ 添加项目</button>
+                </div>
+                <div class="table-wrapper">
+                    <table id="itemsTable">
+                        <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>空间</th>
+                                <th>大类</th>
+                                <th>项目</th>
+                                <th class="sortable" onclick="sortByPriority()">优先级 <span class="sort-icon">⇅</span></th>
+                                <th>状态</th>
+                                <th>预期花费</th>
+                                <th>采购品牌/型号</th>
+                                <th>备注</th>
+                                <th>删除</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- 动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+        <!-- 标签页容器结束 -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
